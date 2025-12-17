@@ -15,7 +15,6 @@ function SchoolDashboard() {
     }
   }, [user]);
 
-  // --- INTERNAL CSS ---
   const internalStyles = `
     .dashboard-table {
       width: 100%;
@@ -89,7 +88,7 @@ function SchoolDashboard() {
     }
   `;
 
-  // --- LAYOUT STYLES ---
+  
   const pageContainerStyle = {
     minHeight: '100vh',
     width: '100%',

@@ -5,26 +5,16 @@ import landingBg from '../assets/landingpage.jpg';
 function ForgotPassword() {
   const navigate = useNavigate();
 
-  // --- STATES ---
   const [email, setEmail] = useState('');
-  
-  // View State: 'CHOICE' | 'OTP_INPUT' | 'SUCCESS_TEMP' | 'SUCCESS_RESET'
   const [viewState, setViewState] = useState('CHOICE'); 
-  
-  // Data States
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [tempPassword, setTempPassword] = useState(''); // For Option 1
-  
-  // UI States
+  const [tempPassword, setTempPassword] = useState(''); 
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [focusedInput, setFocusedInput] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // --- API HANDLERS ---
-
-  // Option 1: Get Temporary Password
   const handleTempPassword = async () => {
     if(!email) { setError("Please enter your email first."); return; }
     setLoading(true); setError(''); setMessage('');
@@ -38,8 +28,6 @@ function ForgotPassword() {
       const data = await response.json();
 
       if (response.ok) {
-        // Since we are mocking email, the backend might return the pass in the message or console
-        // For this UI, we assume the user checks their email, but if your backend sends it in response:
         if (data.temporary_password) setTempPassword(data.temporary_password); 
         setViewState('SUCCESS_TEMP');
       } else {
@@ -51,7 +39,6 @@ function ForgotPassword() {
     setLoading(false);
   };
 
-  // Option 2 (Step A): Send OTP Code
   const handleSendOTP = async () => {
     if(!email) { setError("Please enter your email first."); return; }
     setLoading(true); setError(''); setMessage('');
@@ -76,7 +63,6 @@ function ForgotPassword() {
     setLoading(false);
   };
 
-  // Option 2 (Step B): Verify OTP & Reset
   const handleVerifyReset = async (e) => {
     e.preventDefault();
     setLoading(true); setError(''); setMessage('');
@@ -100,8 +86,6 @@ function ForgotPassword() {
     setLoading(false);
   };
 
-
-  // --- STYLES (PRESERVED) ---
   const pageContainerStyle = {
     backgroundImage: `url(${landingBg})`,
     backgroundSize: 'cover',
@@ -156,7 +140,6 @@ function ForgotPassword() {
     marginBottom: '15px' 
   });
 
-  // Pink/Purple Gradient (Primary)
   const buttonStyle = {
     padding: '15px',
     fontSize: '18px',
@@ -172,7 +155,6 @@ function ForgotPassword() {
     width: '100%'
   };
 
-  // Blue Gradient (Secondary - New for distinction)
   const secondaryButtonStyle = {
     ...buttonStyle,
     backgroundImage: 'linear-gradient(to right, #4facfe 0%, #00f2fe 100%)',
@@ -227,13 +209,11 @@ function ForgotPassword() {
     e.currentTarget.style.boxShadow = '0 10px 20px -10px rgba(255, 0, 153, 0.5)'; 
   }
 
-  // --- RENDER ---
   return (
     <div style={pageContainerStyle}>
       <div style={loginBoxStyle}>
         <h2 style={titleStyle}>Reset Password</h2>
         
-        {/* === VIEW 1: ENTER EMAIL & CHOOSE OPTION === */}
         {viewState === 'CHOICE' && (
           <>
             <p style={{ color: '#ccc', marginBottom: '25px', lineHeight: '1.5' }}>
@@ -279,7 +259,6 @@ function ForgotPassword() {
           </>
         )}
 
-        {/* === VIEW 2: OTP VERIFICATION === */}
         {viewState === 'OTP_INPUT' && (
             <form onSubmit={handleVerifyReset}>
                 <p style={{ color: '#00c6ff', marginBottom: '15px' }}>
@@ -323,50 +302,45 @@ function ForgotPassword() {
             </form>
         )}
 
-        {/* === VIEW 3: SUCCESS (TEMP PASSWORD) === */}
         {viewState === 'SUCCESS_TEMP' && (
-           <div style={successBoxStyle}>
-             <h3 style={{ color: '#00ff7f', margin: '0 0 10px 0', textTransform: 'uppercase' }}>Check Email!</h3>
-             <p style={{ margin: 0, fontSize: '0.9rem', color: '#ddd' }}>
-                 We sent a temporary password to your email.
-             </p>
-             {/* If backend returns it directly, we show it, otherwise we tell them to check email */}
-             {tempPassword && (
-                 <div style={tempPassStyle}>{tempPassword}</div>
-             )}
-             <button 
-               onClick={() => navigate('/login')} 
-               style={{ ...buttonStyle, backgroundImage: 'linear-gradient(to right, #11998e 0%, #38ef7d 100%)', boxShadow: 'none' }}
-             >
-               LOGIN NOW
-             </button>
-           </div>
+            <div style={successBoxStyle}>
+              <h3 style={{ color: '#00ff7f', margin: '0 0 10px 0', textTransform: 'uppercase' }}>Check Email!</h3>
+              <p style={{ margin: 0, fontSize: '0.9rem', color: '#ddd' }}>
+                  We sent a temporary password to your email.
+              </p>
+              {tempPassword && (
+                  <div style={tempPassStyle}>{tempPassword}</div>
+              )}
+              <button 
+                onClick={() => navigate('/login')} 
+                style={{ ...buttonStyle, backgroundImage: 'linear-gradient(to right, #11998e 0%, #38ef7d 100%)', boxShadow: 'none' }}
+              >
+                LOGIN NOW
+              </button>
+            </div>
         )}
 
-        {/* === VIEW 4: SUCCESS (RESET COMPLETE) === */}
         {viewState === 'SUCCESS_RESET' && (
-           <div style={successBoxStyle}>
-             <h3 style={{ color: '#00ff7f', margin: '0 0 10px 0', textTransform: 'uppercase' }}>Success!</h3>
-             <p style={{ margin: '15px 0', fontSize: '1rem', color: '#ddd' }}>
-                 Your password has been reset successfully.
-             </p>
-             <button 
-               onClick={() => navigate('/login')} 
-               style={{ ...buttonStyle, backgroundImage: 'linear-gradient(to right, #11998e 0%, #38ef7d 100%)', boxShadow: 'none' }}
-             >
-               LOGIN WITH NEW PASSWORD
-             </button>
-           </div>
+            <div style={successBoxStyle}>
+              <h3 style={{ color: '#00ff7f', margin: '0 0 10px 0', textTransform: 'uppercase' }}>Success!</h3>
+              <p style={{ margin: '15px 0', fontSize: '1rem', color: '#ddd' }}>
+                  Your password has been reset successfully.
+              </p>
+              <button 
+                onClick={() => navigate('/login')} 
+                style={{ ...buttonStyle, backgroundImage: 'linear-gradient(to right, #11998e 0%, #38ef7d 100%)', boxShadow: 'none' }}
+              >
+                LOGIN WITH NEW PASSWORD
+              </button>
+            </div>
         )}
 
-        {/* === ERROR MESSAGE === */}
         {error && (
           <div style={{ marginTop: '20px', color: '#ff4d4d', backgroundColor: 'rgba(255, 0, 0, 0.1)', padding: '10px', borderRadius: '5px', border: '1px solid #ff4d4d' }}>
             {error}
           </div>
         )}
 
-        {/* === BACK TO LOGIN LINK (Only show if not in success state) === */}
         {!['SUCCESS_TEMP', 'SUCCESS_RESET'].includes(viewState) && (
           <div>
             <Link 

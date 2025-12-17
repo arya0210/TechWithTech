@@ -38,17 +38,14 @@ function CreateRequest() {
   };
 
   const handleAccept = async (donation) => {
-    // SAFETY CHECK: Ensure the company name exists
     const companyName = donation.donor?.PTY_Name || "the Donor";
-    const maxAvailable = donation.ITD_PendingQuantity; // The limit
+    const maxAvailable = donation.ITD_PendingQuantity; 
 
-    // Ask user for input
     const amount = prompt(`How many ${itemName} do you want from ${companyName}? (Available: ${maxAvailable})`, Math.min(maxAvailable, 10));
     
-    if (!amount) return; // User cancelled
+    if (!amount) return; 
     const qtyInt = parseInt(amount);
 
-    // --- VALIDATION LOGIC ---
     if (isNaN(qtyInt) || qtyInt <= 0) {
         alert("Please enter a valid number greater than 0.");
         return;
@@ -56,11 +53,10 @@ function CreateRequest() {
 
     if (qtyInt > maxAvailable) {
         alert(`Error: You cannot accept ${qtyInt} items. Only ${maxAvailable} are available.`);
-        return; // STOP HERE
+        return; 
     }
 
     try {
-      // Step A: Create Request Record
       const reqRes = await createRequest({
         user_id: user.party_id,
         item_name: itemName,
@@ -68,7 +64,6 @@ function CreateRequest() {
       });
       const newRequestId = reqRes.data.ITR_ID;
 
-      // Step B: Execute Match
       await executeMatch({
         request_id: newRequestId,
         donation_id: donation.ITD_ID,
@@ -82,9 +77,7 @@ function CreateRequest() {
     }
   };
 
-  // --- INTERNAL CSS ---
   const internalStyles = `
-    /* Table Styling */
     .dashboard-table {
       width: 100%;
       border-collapse: collapse;
@@ -108,7 +101,6 @@ function CreateRequest() {
       border: 1px solid #7f8c8d; 
     }
 
-    /* Row Colors: Silver */
     .dashboard-table tbody tr {
       background-color: #bdc3c7; 
       color: #2c3e50;
@@ -119,7 +111,6 @@ function CreateRequest() {
       background-color: #aab7b8; 
     }
 
-    /* Form Input Styling */
     .form-control {
       padding: 12px;
       border-radius: 4px;
@@ -127,9 +118,8 @@ function CreateRequest() {
       font-size: 1rem;
     }
 
-    /* Buttons */
     .btn-submit {
-      background-color: #007bff; /* Blue for Requests */
+      background-color: #007bff; 
       color: white;
       border: none;
       padding: 12px 24px;
@@ -145,7 +135,7 @@ function CreateRequest() {
     }
 
     .btn-action {
-      background-color: #27ae60; /* Green for Accepting */
+      background-color: #27ae60; 
       color: white;
       border: none;
       padding: 8px 16px;
@@ -159,11 +149,10 @@ function CreateRequest() {
     }
   `;
 
-  // --- LAYOUT STYLES ---
   const pageContainerStyle = {
     minHeight: '100vh',
     width: '100%',
-    backgroundColor: '#1a1a1a', // Dark rugged background
+    backgroundColor: '#1a1a1a', 
     display: 'flex',
     justifyContent: 'center',
     paddingTop: '80px',
@@ -172,7 +161,7 @@ function CreateRequest() {
   };
 
   const contentCardStyle = {
-    backgroundColor: '#34495e', // Dark Blue-Grey Card
+    backgroundColor: '#34495e', 
     color: '#ecf0f1',
     padding: '40px',
     borderRadius: '8px',
@@ -183,7 +172,7 @@ function CreateRequest() {
   };
 
   const sectionBoxStyle = {
-    backgroundColor: 'rgba(0, 0, 0, 0.2)', // Slightly darker box for the form
+    backgroundColor: 'rgba(0, 0, 0, 0.2)', 
     padding: '25px',
     borderRadius: '8px',
     border: '1px solid #555',
@@ -199,7 +188,6 @@ function CreateRequest() {
           Create New Request
         </h2>
         
-        {/* Option 1: Manual Form */}
         <div style={sectionBoxStyle}>
           <h3 style={{ marginTop: 0, color: '#ecf0f1' }}>Option 1: Request an Item</h3>
           <p style={{ color: '#bdc3c7', marginBottom: '15px' }}>
@@ -234,7 +222,6 @@ function CreateRequest() {
           </form>
         </div>
 
-        {/* Option 2: Smart Table */}
         <h3 style={{ color: '#ecf0f1', borderLeft: '5px solid #27ae60', paddingLeft: '10px' }}>
           Option 2: Available Donations for {itemName}
         </h3>
@@ -279,4 +266,5 @@ function CreateRequest() {
     </div>
   );
 }
+
 export default CreateRequest;

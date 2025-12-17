@@ -15,7 +15,7 @@ function CompanyDashboard() {
     }
   }, [user]);
 
-  // --- INTERNAL CSS ---
+ 
   const internalStyles = `
     .dashboard-table {
       width: 100%;
@@ -88,8 +88,6 @@ function CompanyDashboard() {
       color: #5c4100;
     }
   `;
-
-  // --- LAYOUT STYLES ---
   const pageContainerStyle = {
     minHeight: '100vh',
     width: '100%',

@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # DATABASE CONNECTION URL
-# This tells Python where to find my PostgreSQL data base.
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:02102004@localhost/donation_db"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)

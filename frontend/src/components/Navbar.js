@@ -6,13 +6,10 @@ function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Get user data safely
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
-  // Mouse Hover Logic
   useEffect(() => {
     const handleMouseMove = (e) => {
-      // Show navbar if cursor is within top 60px
       if (e.clientY < 60) {
         setIsVisible(true);
       } else {
@@ -29,19 +26,13 @@ function Navbar() {
     navigate('/');
   };
 
-  // ============================================
-  //  THE FIX IS IN THIS FUNCTION
-  // ============================================
   const renderLinks = () => {
-    
-    // 1. LOGIN / SIGNUP PAGE -> Show Simple Home
     if (location.pathname === '/' || location.pathname === '/signup') {
       return (
         <Link to="/" style={styles.link}>Home</Link>
       );
     }
 
-    // 2. COMPANY LOGIC (Fixed: checking user.type)
     if (user && user.type === 'Company') {
       return (
         <>
@@ -52,7 +43,6 @@ function Navbar() {
       );
     }
 
-    // 3. SCHOOL LOGIC (Fixed: checking user.type)
     if (user && user.type === 'School') {
       return (
         <>
@@ -63,7 +53,6 @@ function Navbar() {
       );
     }
 
-    // Fallback if something is wrong
     return <Link to="/" style={styles.link}>Home</Link>;
   };
 
@@ -75,7 +64,6 @@ function Navbar() {
       </div>
 
       <div style={styles.links}>
-        {/* Show Name if logged in */}
         {user && location.pathname !== '/' && location.pathname !== '/signup' && (
           <span style={styles.userGreeting}>Hi, {user.name}</span>
         )}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { login } from '../api';
 import { useNavigate, Link } from 'react-router-dom';
-// IMPORT IMAGE
+
 import landingBg from '../assets/landingpage.jpg';
 
 function Login() {
@@ -15,12 +15,12 @@ function Login() {
     try {
       const response = await login({ email, password });
       
-      // Save the entire user object including party_id and name
+      
       localStorage.setItem('user', JSON.stringify(response.data));
       
       console.log('Login Successful!', response.data); 
       
-      // Navigate based on type from backend (School or Company)
+      
       if (response.data.type === 'School') {
         navigate('/school-dashboard');
       } else {
@@ -31,7 +31,7 @@ function Login() {
     }
   };
 
-  // --- STYLES ---
+
   const pageContainerStyle = {
     backgroundImage: `url(${landingBg})`,
     backgroundSize: 'cover',

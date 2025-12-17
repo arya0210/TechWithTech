@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { signup } from '../api';
 import { useNavigate } from 'react-router-dom';
-// IMPORT IMAGE
 import landingBg from '../assets/landingpage.jpg';
 
 function Signup() {
@@ -28,13 +27,12 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      // We map the formData to match the Pydantic Schema "UserCreate" in schemas.py
       const backendPayload = {
         email: formData.email,
         password: formData.password,
         name: formData.contactName, 
         phone: formData.phone,
-        user_type: formData.userType, // Must match "user_type" in schemas.py
+        user_type: formData.userType, 
         address1: formData.address1,
         address2: formData.address2,
         city: formData.city,
@@ -50,7 +48,6 @@ function Signup() {
     }
   };
 
-  // --- STYLES ---
   const pageContainerStyle = {
     backgroundImage: `url(${landingBg})`,
     backgroundSize: 'cover',
@@ -149,7 +146,6 @@ function Signup() {
         
         <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           
-          {/* Email */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label style={labelStyle}>Login Email</label>
             <input 
@@ -160,7 +156,6 @@ function Signup() {
             />
           </div>
 
-          {/* Password */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label style={labelStyle}>Password</label>
             <input 
@@ -171,7 +166,6 @@ function Signup() {
             />
           </div>
 
-          {/* Address */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label style={labelStyle}>Address</label>
             <input 
@@ -188,7 +182,6 @@ function Signup() {
             />
           </div>
 
-          {/* City, State, Zip Row */}
           <div style={{ display: 'flex', gap: '10px' }}>
             <div style={{ flex: 2 }}>
               <label style={labelStyle}>City</label>
@@ -216,7 +209,6 @@ function Signup() {
             </div>
           </div>
 
-          {/* Contact Name */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label style={labelStyle}>Contact Name</label>
             <input 
@@ -226,7 +218,6 @@ function Signup() {
             />
           </div>
 
-          {/* Phone */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label style={labelStyle}>Phone</label>
             <input 
@@ -236,7 +227,6 @@ function Signup() {
             />
           </div>
 
-          {/* Type Dropdown */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label style={labelStyle}>Type</label>
             <select 
@@ -256,7 +246,6 @@ function Signup() {
             </select>
           </div>
 
-          {/* Save Button */}
           <button 
             type="submit" 
             style={buttonStyle}

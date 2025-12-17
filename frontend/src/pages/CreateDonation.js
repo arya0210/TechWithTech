@@ -38,17 +38,14 @@ function CreateDonation() {
   };
 
   const handleDonate = async (request) => {
-    // SAFETY CHECK: Ensure the school name exists
     const schoolName = request.requester?.PTY_Name || "the School";
-    const maxNeeded = request.ITR_PendingQuantity; // The limit
+    const maxNeeded = request.ITR_PendingQuantity; 
     
-    // Ask user for input
     const amount = prompt(`How many ${itemName} to donate to ${schoolName}? (Needed: ${maxNeeded})`, Math.min(maxNeeded, 10));
     
-    if (!amount) return; // User cancelled
+    if (!amount) return; 
     const qtyInt = parseInt(amount);
 
-    // --- VALIDATION LOGIC ---
     if (isNaN(qtyInt) || qtyInt <= 0) {
         alert("Please enter a valid number greater than 0.");
         return;
@@ -56,11 +53,10 @@ function CreateDonation() {
 
     if (qtyInt > maxNeeded) {
         alert(`Error: You cannot donate ${qtyInt} items. The school only needs ${maxNeeded}.`);
-        return; // STOP HERE
+        return; 
     }
 
     try {
-      // Step A: Create Donation Record
       const donationRes = await createDonation({
         user_id: user.party_id,
         item_name: itemName,
@@ -68,7 +64,6 @@ function CreateDonation() {
       });
       const newDonationId = donationRes.data.ITD_ID;
 
-      // Step B: Execute Match
       await executeMatch({
         request_id: request.ITR_ID,
         donation_id: newDonationId,
@@ -82,9 +77,7 @@ function CreateDonation() {
     }
   };
 
-  // --- INTERNAL CSS ---
   const internalStyles = `
-    /* Table Styling (Same as Dashboard) */
     .dashboard-table {
       width: 100%;
       border-collapse: collapse;
@@ -108,7 +101,6 @@ function CreateDonation() {
       border: 1px solid #7f8c8d; 
     }
 
-    /* Row Colors: Silver */
     .dashboard-table tbody tr {
       background-color: #bdc3c7; 
       color: #2c3e50;
@@ -119,7 +111,6 @@ function CreateDonation() {
       background-color: #aab7b8; 
     }
 
-    /* Form Input Styling */
     .form-control {
       padding: 12px;
       border-radius: 4px;
@@ -127,7 +118,6 @@ function CreateDonation() {
       font-size: 1rem;
     }
 
-    /* Buttons */
     .btn-submit {
       background-color: #27ae60;
       color: white;
@@ -145,7 +135,7 @@ function CreateDonation() {
     }
 
     .btn-action {
-      background-color: #d35400; /* Burnt Orange for Action */
+      background-color: #d35400; 
       color: white;
       border: none;
       padding: 8px 16px;
@@ -159,11 +149,10 @@ function CreateDonation() {
     }
   `;
 
-  // --- LAYOUT STYLES ---
   const pageContainerStyle = {
     minHeight: '100vh',
     width: '100%',
-    backgroundColor: '#1a1a1a', // Dark rugged background
+    backgroundColor: '#1a1a1a', 
     display: 'flex',
     justifyContent: 'center',
     paddingTop: '80px',
@@ -172,7 +161,7 @@ function CreateDonation() {
   };
 
   const contentCardStyle = {
-    backgroundColor: '#34495e', // Dark Blue-Grey Card
+    backgroundColor: '#34495e', 
     color: '#ecf0f1',
     padding: '40px',
     borderRadius: '8px',
@@ -183,7 +172,7 @@ function CreateDonation() {
   };
 
   const sectionBoxStyle = {
-    backgroundColor: 'rgba(0, 0, 0, 0.2)', // Slightly darker box for the form
+    backgroundColor: 'rgba(0, 0, 0, 0.2)', 
     padding: '25px',
     borderRadius: '8px',
     border: '1px solid #555',
@@ -199,7 +188,6 @@ function CreateDonation() {
           Donate Items
         </h2>
         
-        {/* Option 1: Manual Form */}
         <div style={sectionBoxStyle}>
           <h3 style={{ marginTop: 0, color: '#ecf0f1' }}>Option 1: List a New Donation</h3>
           <p style={{ color: '#bdc3c7', marginBottom: '15px' }}>
@@ -234,7 +222,6 @@ function CreateDonation() {
           </form>
         </div>
 
-        {/* Option 2: Smart Table */}
         <h3 style={{ color: '#ecf0f1', borderLeft: '5px solid #d35400', paddingLeft: '10px' }}>
           Option 2: Schools Needing {itemName}
         </h3>
@@ -279,4 +266,5 @@ function CreateDonation() {
     </div>
   );
 }
+
 export default CreateDonation;
