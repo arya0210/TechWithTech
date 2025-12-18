@@ -1,28 +1,195 @@
 # TechWithTech 🚀
 
-> A full-stack web application built to Connect Tech with Future Techies
-We are the bridge connecting cutting-edge software companies directly with schools. We facilitate the donation of vital resources to empower the next generation of innovators..
+> **"Connecting Tech with Future Techies"**
 
-Hi! I'm a student developer, and this is my latest project. I built this to solve a real-world problem while mastering full-stack development with **React** and **Python**.
+Hi! I'm **Arya**, and this is my latest full-stack project. I built **TechWithTech** to solve a real-world problem while mastering modern web development.
+
+We are the bridge connecting cutting-edge software companies directly with schools. We facilitate the donation of vital resources (computers, lab equipment, books) to empower the next generation of innovators.
+
+## 🔴 Live Demo
+The project is currently deployed on AWS:
+**[View Live Application](http://56.228.82.244/)**
+
+---
+
+## ✨ Key Features
+
+* **🔐 Role-Based Access Control:** Distinct portals for **Schools** (requesters) and **Companies** (donors).
+* **📝 Request Management:** Schools can post detailed requirements for specific infrastructure.
+* **🤝 Donation Matching:** Companies can browse active requests and pledge donations immediately.
+* **✅ Verification System:** Workflow to verify school credentials before requests go live.
+* **📊 Dashboard Analytics:** Track total donations, pending requests, and impact metrics.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Frontend:** React.js, HTML/CSS
-* **Backend:** Python FastAPI
-* **Database:** PostgreSQL
-* **Tools:** VS Code, Git
+### Backend
+* **Language:** Python 3.9+
+* **Framework:** [FastAPI](https://fastapi.tiangolo.com/) - High-performance, asynchronous REST APIs.
+* **Database:** PostgreSQL - Relational database for structured data.
+* **ORM:** SQLAlchemy - ORM for Python.
+
+### Frontend
+* **Framework:** [React.js](https://react.dev/)
+* **Styling:** CSS Modules.
+* **HTTP Client:** Axios/Fetch.
 
 ---
 
 ## 📂 Project Structure
 
-Unlike standard setups, I organized my folders to keep the logic clean:
+Unlike standard setups, I organized the backend logic into a dedicated `App` package to keep the root clean.
 
-* **`frontend/`**: Contains the React user interface.
-* **`app/`**: Contains the Backend API and server logic.
+```bash
+TechWithTech/
+├── App/                 # FastAPI Application Package
+│   ├── __init__.py
+│   ├── database.py      # Database connection & Session
+│   ├── models.py        # SQLAlchemy Models
+│   ├── schemas.py       # Pydantic Models
+│   ├── crud.py          # Database Operations
+│   └── main.py          # Entry point & API routes
+│
+├── frontend/            # React Frontend
+│   ├── src/
+│   │   ├── assets/      # Static files
+│   │   ├── components/  # UI Components
+│   │   ├── pages/       # Page Views
+│   │   └── api.js       # API Configurations
+│   ├── package.json
+│   └── .env             # Frontend Config
+│
+├── venv/                # Virtual Environment
+├── requirements.txt     # Backend Dependencies
+├── reset_db.py          # DB Utility Script
+└── README.md
+
+```
 
 ---
 
-## This project is deployed in AWS :  http://56.228.82.244/
+## ⚡ Getting Started
+
+Follow these instructions to set up the project locally on your machine.
+
+### Prerequisites
+
+* Node.js & npm installed
+* Python 3.9+ installed
+* PostgreSQL installed and running
+
+### 1. Clone the Repository
+
+```bash
+git clone [https://github.com/arya0210/TechWithTech.git]
+cd TechWithTech
+
+```
+
+### 2. Backend Setup
+
+**Create and Activate Virtual Environment:**
+
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Mac/Linux
+python3 -m venv venv
+source venv/bin/activate
+
+```
+
+**Install Dependencies:**
+
+```bash
+pip install -r requirements.txt
+
+```
+
+**Configure Environment Variables:**
+Create a `.env` file in the **root** folder (`TechWithTech/.env`) and add your database credentials:
+
+```env
+DATABASE_URL=postgresql://postgres:yourpassword@localhost/techwithtech_db
+SECRET_KEY=supersecretkey
+
+```
+
+**Run the Server:**
+⚠️ **Important:** Because the code is in the `App/` folder, you must run the command from the **root** directory.
+Correct: TechWithTech> uvicorn App.main:app --reload
+Incorrect: TechWithTech\App> uvicorn main:app --reload
+
+```bash
+# Run this from the root "TechWithTech" folder
+uvicorn App.main:app --reload
+
+```
+
+* API runs at: `http://localhost:8000`
+* Docs run at: `http://localhost:8000/docs`
+
+### 3. Frontend Setup
+
+Open a new terminal and navigate to the frontend folder.
+
+```bash
+cd frontend
+
+```
+
+**Install Dependencies:**
+
+```bash
+npm install
+
+```
+
+**Configure Environment:**
+Create a `.env` file in `frontend/.env`:
+
+```env
+REACT_APP_API_URL=http://localhost:8000
+
+```
+
+**Start the React App:**
+
+```bash
+npm start
+
+```
+
+* App runs at: `http://localhost:3000`
+
+---
+
+## 🔌 API Endpoints Overview
+
+| Method   |    Endpoint      |                   Description                 |
+| ---------|------------------|-----------------------------------------------|
+| **POST** | `/auth/login`    | User login (School/Company)                   |
+| **POST** | `/auth/register` | Register a new account                        |
+| **GET**  | `/requests/`     | List all active equipment requests            |
+| **POST** | `/requests/`     | Create a new equipment request (School only)  |
+| **POST** | `/donations/`    | Pledge a donation to a request (Company only) |
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+## 📞 Contact
+
+**Arya**
+
+* **GitHub:** https://github.com/arya0210
+* **Email:** vardhanarya97@gmail.com
+
+```
